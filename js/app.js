@@ -68,8 +68,6 @@ qwerty.addEventListener('click', (e) => {
     checkWin();
 });
 
-// CODES ABOVE THIS LINE ARE CORRECT (up to Step 7 of Project 5 Instructions)
-
 // check if the game has been won or lost and show the aprropriate screen
 const checkWin = () => {
     let answer = document.querySelectorAll('li.letter');
