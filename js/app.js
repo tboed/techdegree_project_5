@@ -3,6 +3,8 @@ const phrase = document.getElementById( '#phrase' );
 const title = document.querySelector('.title')
 const startGame = document.querySelector( '.btn__reset' );
 const overlay = document.getElementById( 'overlay' );
+const totalLives = document.querySelector( '#lives' );
+const tries = document.querySelector( '.tries' )
 let missed = 0;
 
 // listen for the start game btton to be pressed
@@ -95,5 +97,21 @@ const newGame = () => {
 		keyboard[i].classList.remove('chosen');
 	}
 	document.querySelector('#phrase ul').innerHTML = "";
-	addPhraseToDisplay( getRandomPhraseAsArray() )
+	addPhraseToDisplay( getRandomPhraseAsArray() );
+	addLives();
+	addLives();
+	addLives();
+	addLives();
+	addLives();
+}
+
+const addLives = () => {
+	let box = document.createElement('LI');
+	let heart = document.createElement('IMG')
+	heart.src = 'images/liveHeart.png'
+	heart.className = 'tries';
+	heart.setAttribute('height', '35px');
+	heart.setAttribute('width', '30px');
+	lives.appendChild(box);
+	box.appendChild(heart);
 }
