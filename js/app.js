@@ -1,12 +1,14 @@
 const qwerty = document.getElementById( 'qwerty' );
 const phrase = document.getElementById( '#phrase' );
+const title = document.querySelector('.title')
 const startGame = document.querySelector( '.btn__reset' );
 const overlay = document.getElementById( 'overlay' );
 let missed = 0;
+
 // listen for the start game btton to be pressed
 startGame.addEventListener( 'click', () => {
 	overlay.style.display = 'none';
-	addPhraseToDisplay( getRandomPhraseAsArray() )
+	newGame();
 } );
 const phrases = [ 
     'The apple of my eye', 
@@ -14,12 +16,15 @@ const phrases = [
     'An apple a day keeps the doctor away', 
     'Cool as a cucumber', 
     'Busy as a bee', 
-    'Saved by the bell' ]
+    'Saved by the bell' 
+]
+
 // return a random phrase from phrases array
 const getRandomPhraseAsArray = () => {
 	let randomIndex = Math.floor( Math.random() * phrases.length );
 	return phrases[ randomIndex ].split( '' );
 }
+
 // adds the letters of a string to the display
 const addPhraseToDisplay = () => {
 	let phrase = getRandomPhraseAsArray();
@@ -35,18 +40,20 @@ const addPhraseToDisplay = () => {
 		ul.appendChild( li );
 	}
 }
+
 // check if a letter is in the phrase
 const checkLetter = ( button ) => {
 	let letters = document.querySelectorAll( 'li.letter' );
 	let matched = null
 	for ( i = 0; i < letters.length; i++ ) {
 		if ( letters[ i ].textContent.toUpperCase() === button.textContent.toUpperCase() ) {
-			letters[ i ].className += 'show';
+			letters[ i ].className += ' show';
 			matched = button;
 		}
 	}
 	return matched;
 }
+
 // listen for the onscreen keyboard to be clicked
 qwerty.addEventListener( 'click', ( e ) => {
 	if ( e.target.tagName === 'BUTTON' ) {
@@ -60,17 +67,33 @@ qwerty.addEventListener( 'click', ( e ) => {
 	}
 	checkWin();
 } );
+
 // check if the game has been won or lost and show the aprropriate screen
 const checkWin = () => {
 	let answer = document.querySelectorAll( 'li.letter' );
 	let correct = document.querySelectorAll( 'li.show' );
 	if ( answer.length == correct.length ) {
 		overlay.className = 'win';
-		startGame.textContent = "Success !";
+		title.textContent = "You did it !";
+		startGame.textContent = 'Another ?'
 		overlay.style.display = 'flex';
+		newGame();
 	} else if ( missed >= 5 ) {
 		overlay.className = 'lose';
-		startGame.textContent = "Unsuccessful !";
+		title.textContent = "You ran out of lives !";
+		startGame.textContent = 'Another ?'
 		overlay.style.display = 'flex';
+		newGame();
 	}
+}
+
+const newGame = () => {
+	missed = 0;
+	let keyboard = document.querySelectorAll('#qwerty button')
+	for (let i = 0; i < keyboard.length; i++ ) {
+		keyboard[i].disabled = false;
+		keyboard[i].classList.remove('chosen');
+	}
+	document.querySelector('#phrase ul').innerHTML = "";
+	addPhraseToDisplay( getRandomPhraseAsArray() )
 }
