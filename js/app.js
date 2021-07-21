@@ -4,7 +4,6 @@ const title = document.querySelector('.title')
 const startGame = document.querySelector( '.btn__reset' );
 const overlay = document.getElementById( 'overlay' );
 const totalLives = document.querySelector( '#lives' );
-const tries = document.querySelector( '.tries' )
 let missed = 0;
 
 // listen for the start game btton to be pressed
@@ -64,7 +63,7 @@ qwerty.addEventListener( 'click', ( e ) => {
 		let letterFound = checkLetter( e.target );
 		if ( letterFound === null ) {
 			missed += 1;
-			document.querySelector( '.tries' ).remove();
+			document.querySelector('.tries').remove();
 		}
 	}
 	checkWin();
@@ -98,11 +97,10 @@ const newGame = () => {
 	}
 	document.querySelector('#phrase ul').innerHTML = "";
 	addPhraseToDisplay( getRandomPhraseAsArray() );
+	totalLives.innerHTML = '';
+	for (i = 0; i < 5; i++){
 	addLives();
-	addLives();
-	addLives();
-	addLives();
-	addLives();
+	}
 }
 
 const addLives = () => {
